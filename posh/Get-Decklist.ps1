@@ -26,3 +26,18 @@ Foreach ($list in $combinedLists.list)
         Remove-item .\tmpOut.txt
         $array += $cleanedData
 }
+$array = ($array -replace '[(].*$','').Replace('\n','')
+$array = $array | ForEach-Object {$_.substring(2)}
+$hash = @{}
+Foreach($card in $array)
+{
+        if($hash.ContainsKey($card))
+        {
+                $hash.$card++
+        }
+        else
+        {
+                $hash.add($card,1)
+        }
+}
+$hash = $hash.GetEnumerator() | Sort-Object -Property Value -Descending
