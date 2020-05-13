@@ -102,12 +102,9 @@ The javascript for the databases in the cEDH Decklist Database.
    */
   function getAgeOfDecklist(currentDate, deckDate) {
     let diffTime = currentDate.getTime() - deckDate.getTime();
-    diffTime = Math.round(diffTime / (1000 * 3600 * 24))
-    return diffTime
+    diffTime = Math.round(diffTime / (1000 * 3600 * 24));
+    return diffTime;
   }
-
-
-
 
   /**
    * Uses the response to populate the database array.
@@ -121,6 +118,7 @@ The javascript for the databases in the cEDH Decklist Database.
     id("hasPrimer").addEventListener("click", toggle);
     id("hasDiscord").addEventListener("click", toggle);
     id("hasRec").addEventListener("click", toggle);
+    id("recentAdd").addEventListener("click", toggle);
 
     let temp = [];
     let narrowedResponse = response.values;
@@ -138,7 +136,7 @@ The javascript for the databases in the cEDH Decklist Database.
       row.discord = entry[7].trim().split(", ");
       row.curators = entry[8].trim().split(", ");
       row.date = entry[9].trim().split(" ")[0];
-      row.age = getAgeOfDecklist(currentDate, new Date(row.date))
+      row.age = getAgeOfDecklist(currentDate, new Date(row.date));
       row.rec = response.range.includes("primary");
       temp.push(row);
     }
@@ -169,6 +167,7 @@ The javascript for the databases in the cEDH Decklist Database.
     let priObj = id("hasPrimer").classList.contains("active");
     let discObj = id("hasDiscord").classList.contains("active");
     let recObj = id("hasRec").classList.contains("active");
+    let recentAdd = id("recentAdd").classList.contains("active");
 
     for (let i in COLOR_ORDER) {
       let color = COLOR_ORDER[i];
@@ -184,6 +183,7 @@ The javascript for the databases in the cEDH Decklist Database.
         let hasPrimer = entry.primer.includes("Y") || !priObj;
         let hasDiscord = entry.discord != "NA" || !discObj;
         let hasRec = entry.rec || !recObj;
+        let hasRecentAdd = entry.age <= 90 || !recentAdd; //if age is less than or equal to  90 ~ 3 months
 
         let matches = false;
         for (let i in entry.curators) {
@@ -200,6 +200,7 @@ The javascript for the databases in the cEDH Decklist Database.
           hasDiscord &&
           searched &&
           matches &&
+          hasRecentAdd &&
           sorted
         ) {
           addRow(entry, i);
