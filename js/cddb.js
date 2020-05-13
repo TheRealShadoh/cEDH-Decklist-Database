@@ -97,6 +97,17 @@ The javascript for the databases in the cEDH Decklist Database.
         .catch(printError);
     }
   }
+  /**
+  Determines days between current date and added date
+   */
+  function getAgeOfDecklist(currentDate, deckDate) {
+    let diffTime = currentDate.getTime() - deckDate.getTime();
+    diffTime = Math.round(diffTime / (1000 * 3600 * 24))
+    return diffTime
+  }
+
+
+
 
   /**
    * Uses the response to populate the database array.
@@ -113,7 +124,7 @@ The javascript for the databases in the cEDH Decklist Database.
 
     let temp = [];
     let narrowedResponse = response.values;
-
+    let currentDate = new Date();
     for (let i in narrowedResponse) {
       let entry = narrowedResponse[i];
       let row = [];
@@ -127,6 +138,7 @@ The javascript for the databases in the cEDH Decklist Database.
       row.discord = entry[7].trim().split(", ");
       row.curators = entry[8].trim().split(", ");
       row.date = entry[9].trim().split(" ")[0];
+      row.age = getAgeOfDecklist(currentDate, new Date(row.date))
       row.rec = response.range.includes("primary");
       temp.push(row);
     }
