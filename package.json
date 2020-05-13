@@ -1,0 +1,29 @@
+{
+  "name": "cedh-decklist-database",
+  "version": "1.0.0",
+  "description": "A collection of Competitive EDH decklists.\r Hosted at: https://averagedragon.github.io/cEDH-Decklist-Database/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRealShadoh/cEDH-Decklist-Database.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheRealShadoh/cEDH-Decklist-Database/issues"
+  },
+  "homepage": "https://github.com/TheRealShadoh/cEDH-Decklist-Database#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
