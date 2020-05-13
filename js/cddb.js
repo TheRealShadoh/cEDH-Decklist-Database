@@ -3,17 +3,75 @@ Github Username - AverageDragon
 6/2/2019
 The javascript for the databases in the cEDH Decklist Database.
 */
-(function() {
+(function () {
   "use strict";
 
-  const BASE_URL = "https://sheets.googleapis.com/v4/spreadsheets/1NYZ2g0ETfGulhPKYAKrKTPjviaLERKuvyKyk9oizV8Q/values/";
+  const BASE_URL =
+    "https://sheets.googleapis.com/v4/spreadsheets/1NYZ2g0ETfGulhPKYAKrKTPjviaLERKuvyKyk9oizV8Q/values/";
   const PARAMS = "!A2:J?key=AIzaSyCy2pE5znDZ9uDdpSgYb2Q992r0YOIPuIw";
   const DECKBOX = "https://deckbox.org/mtg/";
-  const PARTNERS = {"Akiri" : "Akiri, Line-Slinger","Bruse Tarl" : "Bruse Tarl, Boorish Herder","Gorm" : "Gorm the Great","Ikra Shidiqi" : "Ikra Shidiqi, the Usurper","Ishai" : "Ishai, Ojutai Dragonspeaker","Khorvath" : "Khorvath Brightflame","Kraum" : "Kraum, Ludevic's Opus","Krav" : "Krav, the Unredeemed","Kydele" : "Kydele, Chosen of Kruphix","Ludevic" : "Ludevic, Necro-Alchemist","Okaun" : "Okaun, Eye of Chaos","Pir" : "Pir, Imaginative Rascal","Ravos" : "Ravos, Soultender","Regna" : "Regna, the Redeemer","Reyhan" : "Reyhan, Last of the Abzan","Rowan" : "Rowan Kenrith","Sidar Kondo" : "Sidar Kondo of Jamuraa","Silas Renn" : "Silas Renn, Seeker Adept","Sylvia" : "Sylvia Brightspear","Tana" : "Tana, the Bloodsower","Thrasios" : "Thrasios, Triton Hero","Toothy" : "Toothy, Imaginary Friend","Tymna" : "Tymna the Weaver","Vial Smasher" : "Vial Smasher the Fierce","Virtus" : "Virtus the Veiled","Will" : "Will Kenrith","Zndrsplt" : "Zndrsplt, Eye of Wisdom"};
-  const COLOR_ORDER = ["W", "U", "B", "R", "G",
-  "WU", "UB", "BR", "RG", "WG", "WB", "UR", "BG", "RW", "UG",
-  "WUB", "UBR", "BRG", "WRG", "WUG", "WBG", "WUR", "UBG", "WBR", "URG",
-  "UBRG", "WBRG", "WURG", "WUBG", "WUBR", "WUBRG"];
+  const PARTNERS = {
+    Akiri: "Akiri, Line-Slinger",
+    "Bruse Tarl": "Bruse Tarl, Boorish Herder",
+    Gorm: "Gorm the Great",
+    "Ikra Shidiqi": "Ikra Shidiqi, the Usurper",
+    Ishai: "Ishai, Ojutai Dragonspeaker",
+    Khorvath: "Khorvath Brightflame",
+    Kraum: "Kraum, Ludevic's Opus",
+    Krav: "Krav, the Unredeemed",
+    Kydele: "Kydele, Chosen of Kruphix",
+    Ludevic: "Ludevic, Necro-Alchemist",
+    Okaun: "Okaun, Eye of Chaos",
+    Pir: "Pir, Imaginative Rascal",
+    Ravos: "Ravos, Soultender",
+    Regna: "Regna, the Redeemer",
+    Reyhan: "Reyhan, Last of the Abzan",
+    Rowan: "Rowan Kenrith",
+    "Sidar Kondo": "Sidar Kondo of Jamuraa",
+    "Silas Renn": "Silas Renn, Seeker Adept",
+    Sylvia: "Sylvia Brightspear",
+    Tana: "Tana, the Bloodsower",
+    Thrasios: "Thrasios, Triton Hero",
+    Toothy: "Toothy, Imaginary Friend",
+    Tymna: "Tymna the Weaver",
+    "Vial Smasher": "Vial Smasher the Fierce",
+    Virtus: "Virtus the Veiled",
+    Will: "Will Kenrith",
+    Zndrsplt: "Zndrsplt, Eye of Wisdom",
+  };
+  const COLOR_ORDER = [
+    "W",
+    "U",
+    "B",
+    "R",
+    "G",
+    "WU",
+    "UB",
+    "BR",
+    "RG",
+    "WG",
+    "WB",
+    "UR",
+    "BG",
+    "RW",
+    "UG",
+    "WUB",
+    "UBR",
+    "BRG",
+    "WRG",
+    "WUG",
+    "WBG",
+    "WUR",
+    "UBG",
+    "WBR",
+    "URG",
+    "UBRG",
+    "WBRG",
+    "WURG",
+    "WUBG",
+    "WUBR",
+    "WUBRG",
+  ];
 
   let database;
 
@@ -55,6 +113,7 @@ The javascript for the databases in the cEDH Decklist Database.
 
     let temp = [];
     let narrowedResponse = response.values;
+
     for (let i in narrowedResponse) {
       let entry = narrowedResponse[i];
       let row = [];
@@ -90,7 +149,7 @@ The javascript for the databases in the cEDH Decklist Database.
   }
 
   /** Uses the search parameters and updates the database.
-  */
+   */
   function updateDatabase() {
     id("entries").innerHTML = "";
     let search = id("searchtext").value.trim().toLowerCase();
@@ -104,14 +163,15 @@ The javascript for the databases in the cEDH Decklist Database.
 
       for (let i in database) {
         let entry = database[i];
-        let searched = (entry.commander.toLowerCase().includes(search)
-            || entry.deckname.toLowerCase().includes(search)
-            || entry.description.toLowerCase().includes(search)
-            || entry.strategy.toLowerCase().includes(search));
+        let searched =
+          entry.commander.toLowerCase().includes(search) ||
+          entry.deckname.toLowerCase().includes(search) ||
+          entry.description.toLowerCase().includes(search) ||
+          entry.strategy.toLowerCase().includes(search);
 
-        let hasPrimer = (entry.primer.includes("Y")) || !priObj;
-        let hasDiscord = (entry.discord != "NA") || !discObj;
-        let hasRec = entry.rec || !recObj
+        let hasPrimer = entry.primer.includes("Y") || !priObj;
+        let hasDiscord = entry.discord != "NA" || !discObj;
+        let hasRec = entry.rec || !recObj;
 
         let matches = false;
         for (let i in entry.curators) {
@@ -120,9 +180,16 @@ The javascript for the databases in the cEDH Decklist Database.
           }
         }
 
-        let sorted = (color == entry.colors);
+        let sorted = color == entry.colors;
 
-        if (hasRec && hasPrimer && hasDiscord && searched && matches && sorted) {
+        if (
+          hasRec &&
+          hasPrimer &&
+          hasDiscord &&
+          searched &&
+          matches &&
+          sorted
+        ) {
           addRow(entry, i);
         }
       }
@@ -195,7 +262,7 @@ The javascript for the databases in the cEDH Decklist Database.
       if (!colorSplit.includes(letter)) {
         letter = "d";
       }
-      image.src= "img/mana/" + letter + ".png";
+      image.src = "img/mana/" + letter + ".png";
       image.alt = letter;
       wrapper.appendChild(image);
     }
@@ -218,13 +285,17 @@ The javascript for the databases in the cEDH Decklist Database.
       link1.classList = "commanderLink";
       link1.href = DECKBOX + PARTNERS[[p1]];
       link1.innerText = p1 + " /";
-      link1.onclick = function() {return false;};
+      link1.onclick = function () {
+        return false;
+      };
 
       let link2 = document.createElement("a");
       link2.classList = "commanderLink";
       link2.href = DECKBOX + PARTNERS[p2];
       link2.innerText = " " + p2;
-      link2.onclick = function() {return false;};
+      link2.onclick = function () {
+        return false;
+      };
 
       wrapper.appendChild(link1);
       wrapper.appendChild(link2);
@@ -233,7 +304,9 @@ The javascript for the databases in the cEDH Decklist Database.
       link.classList = "commanderLink";
       link.href = DECKBOX + entry.commander.trim();
       link.innerText = entry.commander;
-      link.onclick = function() {return false;};
+      link.onclick = function () {
+        return false;
+      };
       wrapper.appendChild(link);
     }
 
@@ -313,7 +386,7 @@ The javascript for the databases in the cEDH Decklist Database.
     let decklists = document.createElement("div");
     decklists.classList = "decklists";
 
-    let lists = entry.list
+    let lists = entry.list;
     for (let i in lists) {
       let list = lists[i].trim();
       let link = document.createElement("a");
@@ -398,13 +471,13 @@ The javascript for the databases in the cEDH Decklist Database.
   /* HELPER FUNCTIONS */
 
   /** Prints and error's content to the webpage
-  * @param {string} info - the error information that should be passed
-  */
+   * @param {string} info - the error information that should be passed
+   */
   function printError(info) {
     id("entries").innerHTML = "";
     let error = document.createElement("td");
-    error.innerText = "Sorry, the request to our database failed with the error:\n"
-                      + info;
+    error.innerText =
+      "Sorry, the request to our database failed with the error:\n" + info;
     error.colSpan = "4";
     let row = document.createElement("tr");
     row.appendChild(error);
@@ -422,10 +495,10 @@ The javascript for the databases in the cEDH Decklist Database.
   }
 
   /**
-  * Returns the first element that matches the given CSS selector.
-  * @param {string} query - CSS query selector.
-  * @returns {object} The first DOM object matching the query.
-  */
+   * Returns the first element that matches the given CSS selector.
+   * @param {string} query - CSS query selector.
+   * @returns {object} The first DOM object matching the query.
+   */
   function qs(query) {
     return document.querySelector(query);
   }
@@ -451,7 +524,9 @@ The javascript for the databases in the cEDH Decklist Database.
       return response.text();
     } else {
       console.log(response);
-      return Promise.reject(new Error(response.status + ": " + response.statusText));
+      return Promise.reject(
+        new Error(response.status + ": " + response.statusText)
+      );
     }
   }
 })();
